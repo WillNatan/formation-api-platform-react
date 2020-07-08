@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *      "groups"={"customers_read"}
  * },
  *  collectionOperations={"get"={"path"="/clients"},"post"},
- *  itemOperations={"get"={"path"="/clients/{id}"},"put", "delete"},
+ *  itemOperations={"get"={"path"="/clients/{id}"},"put", "delete"={"path"="/clients/{id}"}},
  *  subresourceOperations={"invoices_get_subresource"={"path"="/clients/{id}/factures"}}
  * )
  * @ApiFilter(
