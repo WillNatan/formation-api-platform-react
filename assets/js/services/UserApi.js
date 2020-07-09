@@ -1,8 +1,10 @@
+import { USERS_API } from "../config";
+
 const { default: Axios } = require("axios");
 
 function create(user){
     return Axios.post(
-        "http://localhost:8000/api/users",
+        USERS_API,
         user
       );
 }
