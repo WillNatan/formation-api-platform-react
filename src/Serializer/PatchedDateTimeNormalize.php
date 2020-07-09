@@ -60,7 +60,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
 
         if (null !== $timezone) {
             $object = clone $object;
-            $object = $object->setTimezone($timezone);
+            $object = $$timezone->setTimezone($timezone);
         }
 
         return $object->format($dateTimeFormat);
