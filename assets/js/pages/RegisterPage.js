@@ -38,7 +38,7 @@ const RegisterPage = ({ history }) => {
     }
 
     try {
-      const response = await UserApi.create();
+      const response = await UserApi.create(user);
       setErrors({});
       //FLash succès
       toast.success(

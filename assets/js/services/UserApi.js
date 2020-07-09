@@ -1,6 +1,6 @@
 import { USERS_API } from "../config";
 
-const { default: Axios } = require("axios");
+import Axios from "axios";
 
 function create(user){
     return Axios.post(
