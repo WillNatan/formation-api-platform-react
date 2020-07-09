@@ -11,11 +11,11 @@
 
 namespace App\Serializer;
 
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Exception\InvalidArgumentException;
 use Symfony\Component\Serializer\Exception\NotNormalizableValueException;
 use Symfony\Component\Serializer\Normalizer\CacheableSupportsMethodInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 
 /**
  * Normalizes an object implementing the {@see \DateTimeInterface} to a date string.
@@ -60,7 +60,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
 
         if (null !== $timezone) {
             $object = clone $object;
-            $object = $$timezone->setTimezone($timezone);
+            $object = $object->setTimezone($timezone);
         }
 
         return $object->format($dateTimeFormat);
@@ -104,8 +104,7 @@ class PatchedDateTimeNormalizer implements NormalizerInterface, DenormalizerInte
             return \DateTime::class === $type ? new \DateTime($data, $timezone) : new \DateTimeImmutable($data, $timezone);
         } catch (\Exception $e) {
 
-            if($context['disable_type_enforcement'] ?? false)
-            {
+            if($context['disabled_type_enforcement'] ?? false) {
                 return $data;
             }
 
