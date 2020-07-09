@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import Field from "../components/forms/Field";
 import { Link } from "react-router-dom";
 import UserApi from "../services/UserApi";
+import { toast } from "react-toastify";
 
-const RegisterPage = ({history}) => {
+const RegisterPage = ({ history }) => {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -28,28 +29,34 @@ const RegisterPage = ({history}) => {
     event.preventDefault();
 
     const apiErrors = {};
-    if(user.password !== user.passwordConfirm) {
-        apiErrors.passwordConfirm = "Votre confirmation de mot de passe n'est pas conforme avec le mot de passe original";
-        setErrors(apiErrors);
-        return;
+    if (user.password !== user.passwordConfirm) {
+      apiErrors.passwordConfirm =
+        "Votre confirmation de mot de passe n'est pas conforme avec le mot de passe original";
+      setErrors(apiErrors);
+      toast.error("Une erreur est survenue ! Vérifiez le formulaire !");
+      return;
     }
 
     try {
-      const response = await UserApi.create()
+      const response = await UserApi.create();
+      setErrors({});
       //FLash succès
-      setErrors({})
+      toast.success(
+        "Vous êtes désormais inscrit, vous pouvez vous connecter !"
+      );
       history.replace("/login");
     } catch (error) {
       const { violations } = error.response.data;
       if (violations) {
-        
         violations.map((violation) => {
           apiErrors[violation.propertyPath] = violation.message;
         });
         setErrors(apiErrors);
+        toast.error("Une erreur est survenue ! Vérifiez le formulaire !");
       }
 
       //flash erreur
+      toast.error("Une erreur est survenue ! Vérifiez le formulaire !");
     }
   };
   return (

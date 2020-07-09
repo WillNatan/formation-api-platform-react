@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import Field from "../components/forms/Field";
 import { Link } from "react-router-dom";
 import CustomersApi from "../services/CustomersApi";
+import { toast } from "react-toastify";
+import FormContentLoader from "../components/loaders/FormContentLoader";
 
 const CustomerPage = ({ history, match }) => {
   const { id = "new" } = match.params;
@@ -21,6 +23,7 @@ const CustomerPage = ({ history, match }) => {
   });
 
   const [editing, setEditing] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const fetchCustomer = async (id) => {
     try {
@@ -33,15 +36,18 @@ const CustomerPage = ({ history, match }) => {
         email,
         company,
       });
+      setLoading(false);
     } catch (error) {
       console.log(error.response);
       // notif flash erreur
+      toast.error("Une erreur est survenue lors du chargement")
       history.replace("/customers");
     }
   };
 
   useEffect(() => {
     if (id !== "new") {
+      setLoading(true);
       setEditing(true);
       fetchCustomer(id);
     }
@@ -56,18 +62,21 @@ const CustomerPage = ({ history, match }) => {
     event.preventDefault();
 
     try {
+      setErrors({});
       if (editing) {
         const response = await CustomersApi.update(id, customer);
 
         // Notif Succès
+        toast.success("Le client a bien été Modifé !")
       } else {
         const response = await CustomersApi.create(customer);
 
         // Notif succès
-
+        toast.success("Le client a bien été ajouté !")
+        
         history.replace("/customers");
       }
-      setErrors({});
+
     } catch ({ response }) {
       const { violations } = response.data;
       if (violations) {
@@ -76,7 +85,7 @@ const CustomerPage = ({ history, match }) => {
           ({ propertyPath, message }) => (apiErrors[propertyPath] = message)
         );
         setErrors(apiErrors);
-
+        toast.error("Une erreur est survenue , vérifiez le formulaire !")
         //Notif erreurs
       }
     }
@@ -86,7 +95,8 @@ const CustomerPage = ({ history, match }) => {
       {(!editing && <h1>Création d'un client</h1>) || (
         <h1>Modification d'un client</h1>
       )}
-      <form onSubmit={handleSubmit}>
+      {loading && <FormContentLoader />}
+      {!loading &&<form onSubmit={handleSubmit}>
         <Field
           name="lastname"
           label="nom de famille"
@@ -129,6 +139,7 @@ const CustomerPage = ({ history, match }) => {
           </Link>
         </div>
       </form>
+}
     </>
   );
 };
