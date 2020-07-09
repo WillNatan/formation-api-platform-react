@@ -22,8 +22,8 @@ use Symfony\Component\Validator\Constraints as Assert;
  *  normalizationContext={
  *      "groups"={"customers_read"}
  * },
- *  collectionOperations={"get"={"path"="/clients"},"post"},
- *  itemOperations={"get"={"path"="/clients/{id}"},"put", "delete"={"path"="/clients/{id}"}},
+ *  collectionOperations={"get"={"path"="/clients"},"post"={"path"="/clients"}},
+ *  itemOperations={"get"={"path"="/clients/{id}"},"put"={"path"="/clients/{id}"}, "delete"={"path"="/clients/{id}"}},
  *  subresourceOperations={"invoices_get_subresource"={"path"="/clients/{id}/factures"}}
  * )
  * @ApiFilter(
@@ -49,8 +49,8 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read","invoices_read"})
-     * @Assert\NotBlank(message="le prénom du client est obligatoire")
      * @Assert\Length(min=3, minMessage="Le prénom doit faire entre 3 et caractères et 255 caractères", max=255, maxMessage="Le prénom doit faire entre 3 et caractères et 255 caractères")
+     * @Assert\NotBlank(message="le prénom du client est obligatoire")
      * 
      */
     private $firstname;
@@ -58,8 +58,9 @@ class Customer
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"customers_read","invoices_read"})
-     * @Assert\NotBlank(message="le nom de famille du client est obligatoire")
      * @Assert\Length(min=3, minMessage="Le nom de famille doit faire entre 3 et caractères et 255 caractères", max=255, maxMessage="Le nom de famille doit faire entre 3 et caractères et 255 caractères")
+     
+     * @Assert\NotBlank(message="le nom de famille du client est obligatoire")
      */
     private $lastname;
 
