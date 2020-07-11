@@ -85,6 +85,7 @@ const InvoicesPage = (props) => {
 
   return (
     <>
+    <>
       <div className="mb-2 d-flex justify-content-between align-items-center">
         <h1>Liste des factures</h1>
         <Link className="btn btn-primary" to="/invoices/new">
@@ -103,11 +104,11 @@ const InvoicesPage = (props) => {
       <table className="table table-hover">
         <thead>
           <tr>
-            <th>Numéro de facture</th>
+            <th>N°</th>
             <th>Client</th>
-            <th className="text-center">Date d'envoi de la facture</th>
-            <th className="text-center">Statut</th>
+            <th className="text-center">Date</th>
             <th className="text-center">Montant</th>
+            <th className="text-center">Statut</th>
             <th></th>
           </tr>
         </thead>
@@ -131,12 +132,12 @@ const InvoicesPage = (props) => {
                 </span>
               </td>
               <td>
-                <Link to={"/invoices/"+invoice.id} className="btn btn-sm w-100 btn-primary">Editer</Link>
+                <Link to={"/invoices/"+invoice.id} className="btn btn-sm w-100 btn-primary"><i className="fa fa-edit"></i></Link>
                 <button
                   className="btn btn-sm btn-danger w-100 mt-1"
                   onClick={() => handleDelete(invoice.id)}
                 >
-                  Supprimer
+                  <i className="fa fa-trash"></i>
                 </button>
               </td>
             </tr>
@@ -151,6 +152,7 @@ const InvoicesPage = (props) => {
         length={filteredInvoices.length}
         onPageChanged={handlePageChange}
       />
+    </>
     </>
   );
 };

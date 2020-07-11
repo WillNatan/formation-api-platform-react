@@ -10,7 +10,7 @@ function findAll()
 
 function deleteInvoice(id)
 {
-    axios.get(INVOICES_API + "/" +id)
+    axios.delete(INVOICES_API + "/" +id)
 }
 
 function find(id) {
