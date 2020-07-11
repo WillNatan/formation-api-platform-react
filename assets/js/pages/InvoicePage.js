@@ -130,12 +130,18 @@ const InvoicePage = ({ history, match }) => {
         </Select>
 
         <div className="form-group">
-          <button type="submit" className="btn btn-success">
+          <div className="row">
+            <div className="col-12 col-md-6 text-center">
+            <button type="submit" className="btn btn-success w-100">
             Enregistrer
           </button>
-          <Link to="/invoices" className="btn btn-link">
+            </div>
+            <div className="col-12 col-md-6 text-center">
+            <Link to="/invoices" className="btn btn-link w-100">
             Retour à la liste des factures
           </Link>
+            </div>
+          </div>
         </div>
       </form>
 }

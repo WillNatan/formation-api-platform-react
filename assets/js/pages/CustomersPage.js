@@ -85,58 +85,66 @@ const CustomersPage = (props) => {
         />
       </div>
 
-      <table className="table table-hover">
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Client</th>
-            <th>Email</th>
-            <th>Entreprise</th>
-            <th className="text-center">Factures</th>
-            <th className="text-center">Montant total</th>
-            <th></th>
-          </tr>
-        </thead>
-        {!loading &&
-        <tbody>
-          {paginatedCustomers.map((customer) => (
-            <tr key={customer.id}>
-              <td>{customer.id}</td>
-              <td>
-                <Link to={"/customers/" + customer.id}>
+
+      <div className="row infos no-gutters">
+          <div className="col">
+            <p>Client</p>
+          </div>
+          <div className="col d-none d-md-block">
+            <p className="th">Email</p>
+          </div>
+          <div className="col text-center">
+            <p className="th">Entreprise</p>
+          </div>
+          <div className="col text-center d-none d-md-block">
+            <p className="th">Factures</p>
+          </div>
+          <div className="col ">
+            <p className="th">Montant total</p>
+          </div>
+          <div className="col ">
+            <p className="th"></p>
+          </div>
+        </div>
+        {!loading && paginatedCustomers.map((customer) => (
+        <div className="row infos no-gutters mt-3" key={customer.id}>
+              <div className="col">
+              <Link to={"/customers/" + customer.id}>
                   {customer.firstname} {customer.lastname}
                 </Link>
-              </td>
-              <td>{customer.email}</td>
-              <td>{customer.company}</td>
-              <td className="text-center">
-                <span className="badge badge-primary">
-                  {customer.invoices.length}
-                </span>
-              </td>
-              <td className="text-center">
-                {customer.totalAmount.toLocaleString()} €
-              </td>
-              <td>
-                <Link
+              </div>
+              <div className="col d-none d-md-block">
+                <span>{customer.email}</span>
+              </div>
+              <div className="col text-center ">
+                <span>{customer.company}</span>
+              </div>
+              <div className="col text-center d-none d-md-block">
+                <span>{customer.invoices.length}</span>
+              </div>
+              <div className="col">
+                <span>{customer.totalAmount.toLocaleString()} €</span>
+              </div>
+              <div className="col d-flex justify-content-center flex-column">
+              <Link
                   to={"/customers/" + customer.id}
                   className="btn w-100 btn-sm btn-primary"
                 >
-                  Modifier
+                  <i className="fa fa-edit"></i>
                 </Link>
                 <button
                   onClick={() => handleDelete(customer.id)}
                   disabled={customer.invoices.length > 0}
                   className="btn btn-sm btn-danger mt-1 w-100"
                 >
-                  Supprimer
+                  <i className="fa fa-trash"></i>
                 </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
+              </div>
+            
+            </div>
+        )
+        )
 }
-      </table>
       {loading && <TableLoader/>}
       {itemsPerPage < filteredCustomers.length && (
         <Pagination

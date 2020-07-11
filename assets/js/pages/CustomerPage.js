@@ -131,13 +131,19 @@ const CustomerPage = ({ history, match }) => {
           errorMessage={errors.company}
         />
         <div className="form-group">
-          <button type="submit" className="btn btn-success">
+        <div className="row">
+            <div className="col-12 col-md-6 text-center">
+            <button type="submit" className="btn btn-success w-100">
             Enregistrer
           </button>
-          <Link to="/customers" className="btn btn-link">
-            Retour à la liste
+            </div>
+            <div className="col-12 col-md-6 text-center">
+            <Link to="/customers" className="btn btn-link w-100">
+            Retour à la liste des clients
           </Link>
-        </div>
+            </div>
+          </div>
+          </div>
       </form>
 }
     </>

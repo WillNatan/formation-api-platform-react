@@ -1,7 +1,5 @@
 @media screen and (max-width:768px){
-    .table th, .table td {
-        padding:
-        1px!important;
+    .infos .col {
         font-size: .7rem;
     }
 
@@ -11,4 +9,8 @@
     flex-wrap: wrap;
     font-size: .7rem;
     justify-content: center;
+}
+
+.infos .col .th {
+    
 }
